@@ -14,8 +14,7 @@
     "flarum-extension": {
       "title": "เด็กฝึกงาน.com",
       "icon": {
-            "image": "icon.svg",
-            "backgroundColor": "#fd6523"
+            "image": "icon.png"
         },
       "settings": {
         "login_url": "/d-login",

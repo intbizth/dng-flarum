@@ -5,6 +5,7 @@ namespace Dng\Flarum;
 use Dng\Flarum\LoginController;
 use Dng\Flarum\LogoutController;
 use Flarum\Event\ConfigureForumRoutes;
+use Flarum\Extension\ExtensionManager;
 use Flarum\Foundation\Application;
 use Illuminate\Contracts\Events\Dispatcher;
 
@@ -15,9 +16,15 @@ class AuthenRoutingListener
      */
     private $app;
 
-    public function __construct(Application $app)
+    /**
+     * @var ExtensionManager
+     */
+    private $extensionManager;
+
+    public function __construct(Application $app, ExtensionManager $extensionManager)
     {
         $this->app = $app;
+        $this->extensionManager = $extensionManager;
     }
 
     /**
@@ -33,7 +40,10 @@ class AuthenRoutingListener
      */
     public function onConfigureForumRoutes(ConfigureForumRoutes $event)
     {
-        $event->post($this->app->config('dng.login_url', '/d-login'), 'dngLogin', LoginController::class);
-        $event->get($this->app->config('dng.logout_url', '/d-logout'), 'dngLogout', LogoutController::class);
+        $ext = $this->extensionManager->getExtension(DngForum::NAME);
+        $settings = $ext->composerJsonAttribute('extra.flarum-extension.title.settings');
+
+        $event->post($this->app->config('dng.login_url', $settings['login_url']), 'dngLogin', LoginController::class);
+        $event->get($this->app->config('dng.logout_url', $settings['logout_url']), 'dngLogout', LogoutController::class);
     }
 }

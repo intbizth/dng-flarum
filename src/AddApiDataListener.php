@@ -47,7 +47,7 @@ class AddApiDataListener
             $links = (array) $ext->composerJsonAttribute('extra.flarum-extension.settings')['links'];
 
             // todo: setting provider or db setttings
-            if ($file = $this->settings->get(DngForum::SETTING_FILE_KEY)) {
+            if ($file = $this->settings->get(DngForum::SETTING_FILE_KEY, __DIR__ . '../../../../dng.settings.yml')) {
                 if (file_exists($file)) {
                     $settings = Yaml::parse(file_get_contents($file));
 

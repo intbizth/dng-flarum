@@ -50,7 +50,7 @@ class AddApiDataListener
     {
         if ($event->isSerializer(ForumSerializer::class)) {
             $ext = $this->extensionManager->getExtension(DngForum::NAME);
-            $links = $ext->composerJsonAttribute('extra.flarum-extension.title.settings')['links'];
+            $links = (array) $ext->composerJsonAttribute('extra.flarum-extension.settings')['links'];
 
             $event->attributes = array_merge($event->attributes, [
                 'dng.links' => $this->app->config('dng.links', $links)

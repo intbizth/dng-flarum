@@ -41,7 +41,7 @@ class AuthenRoutingListener
     public function onConfigureForumRoutes(ConfigureForumRoutes $event)
     {
         $ext = $this->extensionManager->getExtension(DngForum::NAME);
-        $settings = $ext->composerJsonAttribute('extra.flarum-extension.title.settings');
+        $settings = (array) $ext->composerJsonAttribute('extra.flarum-extension.settings');
 
         $event->post($this->app->config('dng.login_url', $settings['login_url']), 'dngLogin', LoginController::class);
         $event->get($this->app->config('dng.logout_url', $settings['logout_url']), 'dngLogout', LogoutController::class);

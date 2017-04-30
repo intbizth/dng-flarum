@@ -4,7 +4,7 @@ import HeaderSecondary from 'flarum/components/HeaderSecondary';
 import SettingsPage from 'flarum/components/SettingsPage';
 import SessionDropdown from 'flarum/components/SessionDropdown';
 
-app.initializers.add('toro-dng-flarum', function () {
+app.initializers.add('toro-dng', function () {
     var addLinks = function (items, section)
     {
         var links = app.forum.attribute('dng.links') || {};

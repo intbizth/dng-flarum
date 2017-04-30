@@ -1,4 +1,4 @@
-System.register('toro/dng-login/main', ['flarum/extend', 'flarum/components/HeaderPrimary', 'flarum/components/HeaderSecondary', 'flarum/components/SettingsPage', 'flarum/components/SessionDropdown'], function (_export) {
+System.register('toro/dng/main', ['flarum/extend', 'flarum/components/HeaderPrimary', 'flarum/components/HeaderSecondary', 'flarum/components/SettingsPage', 'flarum/components/SessionDropdown'], function (_export) {
     'use strict';
 
     var extend, HeaderPrimary, HeaderSecondary, SettingsPage, SessionDropdown;
@@ -16,7 +16,7 @@ System.register('toro/dng-login/main', ['flarum/extend', 'flarum/components/Head
         }],
         execute: function () {
 
-            app.initializers.add('toro-dng-login', function () {
+            app.initializers.add('toro-dng', function () {
                 var addLinks = function addLinks(items, section) {
                     var links = app.forum.attribute('dng.links') || {};
                     if (links[section]) {

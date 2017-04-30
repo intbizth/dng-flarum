@@ -13,6 +13,10 @@
   "extra": {
     "flarum-extension": {
       "title": "เด็กฝึกงาน.com",
+      "icon": {
+            "image": "icon.svg",
+            "backgroundColor": "#FFFFFF"
+        },
       "settings": {
         "login_url": "/d-login",
         "logout_url": "/d-logout",

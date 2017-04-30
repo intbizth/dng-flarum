@@ -8,6 +8,7 @@ use Flarum\Event\ConfigureForumRoutes;
 use Flarum\Extension\ExtensionManager;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Illuminate\Contracts\Events\Dispatcher;
+use Symfony\Component\Yaml\Yaml;
 
 class AuthenRoutingListener
 {
@@ -42,8 +43,25 @@ class AuthenRoutingListener
     {
         $ext = $this->extensionManager->getExtension(DngForum::NAME);
         $settings = (array) $ext->composerJsonAttribute('extra.flarum-extension.settings');
+        $loginUrl = $settings['login_url'];
+        $logoutUrl = $settings['logout_url'];
 
-        $event->post($this->settings->get('dng.login_url', $settings['login_url']), 'dngLogin', LoginController::class);
-        $event->get($this->settings->get('dng.logout_url', $settings['logout_url']), 'dngLogout', LogoutController::class);
+        // todo: setting provider or db setttings
+        if ($file = $this->settings->get(DngForum::SETTING_FILE_KEY)) {
+            if (file_exists($file)) {
+                $settings = Yaml::parse(file_get_contents($file));
+
+                if (!empty($settings['login_url'])) {
+                    $loginUrl = $settings['login_url'];
+                }
+
+                if (!empty($settings['logout_url'])) {
+                    $logoutUrl = $settings['logout_url'];
+                }
+            }
+        }
+
+        $event->post($loginUrl, 'dngLogin', LoginController::class);
+        $event->get($logoutUrl, 'dngLogout', LogoutController::class);
     }
 }

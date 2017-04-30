@@ -9,6 +9,7 @@ use Flarum\Extension\ExtensionManager;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Eloquent\Collection;
+use Symfony\Component\Yaml\Yaml;
 
 class AddApiDataListener
 {
@@ -45,8 +46,19 @@ class AddApiDataListener
             $ext = $this->extensionManager->getExtension(DngForum::NAME);
             $links = (array) $ext->composerJsonAttribute('extra.flarum-extension.settings')['links'];
 
+            // todo: setting provider or db setttings
+            if ($file = $this->settings->get(DngForum::SETTING_FILE_KEY)) {
+                if (file_exists($file)) {
+                    $settings = Yaml::parse(file_get_contents($file));
+
+                    if (!empty($settings['links'])) {
+                        $links = $settings['links'];
+                    }
+                }
+            }
+
             $event->attributes = array_merge($event->attributes, [
-                'dng.links' => $this->settings->get('dng.links', $links)
+                'dng.links' => $links
             ]);
         }
     }

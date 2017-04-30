@@ -6,18 +6,12 @@ use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\Event\PrepareApiAttributes;
 use Flarum\Event\PrepareApiData;
 use Flarum\Extension\ExtensionManager;
-use Flarum\Foundation\Application;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Eloquent\Collection;
 
 class AddApiDataListener
 {
-    /**
-     * @var Application
-     */
-    private $app;
-
     /**
      * @var ExtensionManager
      */
@@ -28,9 +22,8 @@ class AddApiDataListener
      */
     private $settings;
 
-    public function __construct(Application $app, ExtensionManager $extensionManager, SettingsRepositoryInterface $settings)
+    public function __construct(ExtensionManager $extensionManager, SettingsRepositoryInterface $settings)
     {
-        $this->app = $app;
         $this->extensionManager = $extensionManager;
         $this->settings = $settings;
     }
@@ -53,7 +46,7 @@ class AddApiDataListener
             $links = (array) $ext->composerJsonAttribute('extra.flarum-extension.settings')['links'];
 
             $event->attributes = array_merge($event->attributes, [
-                'dng.links' => $this->app->config('dng.links', $links)
+                'dng.links' => $this->settings->get('dng.links', $links)
             ]);
         }
     }

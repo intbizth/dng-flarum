@@ -33,7 +33,7 @@ class AuthenRoutingListener
      */
     public function onConfigureForumRoutes(ConfigureForumRoutes $event)
     {
-        $event->post($this->app->config('dng.login_url', '/dng-login'), 'dngLogin', LoginController::class);
-        $event->get($this->app->config('dng.logout_url', '/dng-logout'), 'dngLogout', LogoutController::class);
+        $event->post($this->app->config('dng.login_url', '/d-login'), 'dngLogin', LoginController::class);
+        $event->get($this->app->config('dng.logout_url', '/d-logout'), 'dngLogout', LogoutController::class);
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-use Dng\Flarum\Listener\AutoLogin;
+use Dng\Flarum\AuthenRoutingListener;
 use Illuminate\Contracts\Events\Dispatcher;
 
 return function (Dispatcher $events) {
-    $events->subscribe(AutoLogin::class);
+    $events->subscribe(AuthenRoutingListener::class);
 };

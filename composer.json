@@ -15,7 +15,7 @@
       "title": "เด็กฝึกงาน.com",
       "icon": {
             "image": "icon.svg",
-            "backgroundColor": "#FFFFFF"
+            "backgroundColor": "#fd6523"
         },
       "settings": {
         "login_url": "/d-login",

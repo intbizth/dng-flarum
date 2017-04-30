@@ -1,31 +1,45 @@
 {
-    "name": "toro/flarum-ext-dng",
-    "description": "Dng Flarum",
-    "type": "flarum-extension",
-    "require": {
-        "flarum/core": "^0.1.0-beta.6"
-    },
-    "autoload": {
-        "psr-4": {
-            "Dng\\Flarum\\": "src/"
-        }
-    },
-    "extra": {
-        "flarum-extension": {
-            "title": "เด็กฝึกงาน.com",
-            "settings": {
-                "login_url": "/d-login",
-                "logout_url": "/d-logout",
-                "links": {
-                    "primary": [
-                        {"id": "dng-home", "href": "https://เด็กฝึกงาน.com", "label": "เด็กฝึกงาน.com"}
-                    ],
-                    "secondary": [
-                        {"id": "dng-register", "href": "https://เด็กฝึกงาน.com/register", "label": "สมัครสมาชิก", "private": false},
-                        {"id": "dng-login", "href": "https://เด็กฝึกงาน.com/login", "label": "เข้าระบบ", "private": false}
-                    ]
-                }
-            }
-        }
+  "name": "toro/flarum-ext-dng",
+  "description": "Dng Flarum",
+  "type": "flarum-extension",
+  "require": {
+    "flarum/core": "^0.1.0-beta.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "Dng\\Flarum\\": "src/"
     }
+  },
+  "extra": {
+    "flarum-extension": {
+      "title": "เด็กฝึกงาน.com",
+      "settings": {
+        "login_url": "/d-login",
+        "logout_url": "/d-logout",
+        "links": {
+          "primary": [
+            {
+              "id": "dng-home",
+              "href": "https://เด็กฝึกงาน.com",
+              "label": "เด็กฝึกงาน.com"
+            }
+          ],
+          "secondary": [
+            {
+              "id": "dng-register",
+              "href": "https://เด็กฝึกงาน.com/register",
+              "label": "สมัครสมาชิก",
+              "private": false
+            },
+            {
+              "id": "dng-login",
+              "href": "https://เด็กฝึกงาน.com/login",
+              "label": "เข้าระบบ",
+              "private": false
+            }
+          ]
+        }
+      }
+    }
+  }
 }

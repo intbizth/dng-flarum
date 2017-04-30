@@ -19,6 +19,7 @@
       "settings": {
         "login_url": "/d-login",
         "logout_url": "/d-logout",
+        "dng_login_url": "/login",
         "links": {
           "primary": [
             {

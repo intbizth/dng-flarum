@@ -1,7 +1,7 @@
-System.register('toro/dng/main', ['flarum/extend', 'flarum/components/HeaderPrimary', 'flarum/components/HeaderSecondary', 'flarum/components/SettingsPage', 'flarum/components/SessionDropdown'], function (_export) {
+System.register('toro/dng/main', ['flarum/extend', 'flarum/components/HeaderPrimary', 'flarum/components/HeaderSecondary', 'flarum/components/SettingsPage', 'flarum/components/SessionDropdown', 'flarum/components/LogInModal'], function (_export) {
     'use strict';
 
-    var extend, HeaderPrimary, HeaderSecondary, SettingsPage, SessionDropdown;
+    var extend, HeaderPrimary, HeaderSecondary, SettingsPage, SessionDropdown, LogInModal;
     return {
         setters: [function (_flarumExtend) {
             extend = _flarumExtend.extend;
@@ -13,6 +13,8 @@ System.register('toro/dng/main', ['flarum/extend', 'flarum/components/HeaderPrim
             SettingsPage = _flarumComponentsSettingsPage['default'];
         }, function (_flarumComponentsSessionDropdown) {
             SessionDropdown = _flarumComponentsSessionDropdown['default'];
+        }, function (_flarumComponentsLogInModal) {
+            LogInModal = _flarumComponentsLogInModal['default'];
         }],
         execute: function () {
 
@@ -65,6 +67,12 @@ System.register('toro/dng/main', ['flarum/extend', 'flarum/components/HeaderPrim
                         items.remove('logOut');
                     }
                 });
+
+                LogInModal.prototype.content = function () {
+                    window.location.href = app.forum.attribute('dng.login');
+                    // TODO: custom dng login form
+                    return [];
+                };
             });
         }
     };

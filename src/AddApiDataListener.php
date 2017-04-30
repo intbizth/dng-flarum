@@ -44,7 +44,9 @@ class AddApiDataListener
     {
         if ($event->isSerializer(ForumSerializer::class)) {
             $ext = $this->extensionManager->getExtension(DngForum::NAME);
-            $links = (array) $ext->composerJsonAttribute('extra.flarum-extension.settings')['links'];
+            $settings = (array) $ext->composerJsonAttribute('extra.flarum-extension.settings');
+            $links = $settings['links'];
+            $loginUrl = $settings['dng_login_url'];
 
             // todo: setting provider or db setttings
             if ($file = $this->settings->get(DngForum::SETTING_FILE_KEY, __DIR__ . '../../../../dng.settings.yml')) {
@@ -54,11 +56,16 @@ class AddApiDataListener
                     if (!empty($settings['links'])) {
                         $links = $settings['links'];
                     }
+
+                    if (!empty($settings['dng_login_url'])) {
+                        $loginUrl = $settings['dng_login_url'];
+                    }
                 }
             }
 
             $event->attributes = array_merge($event->attributes, [
-                'dng.links' => $links
+                'dng.links' => $links,
+                'dng.login' => $loginUrl
             ]);
         }
     }

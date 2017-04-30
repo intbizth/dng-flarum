@@ -3,6 +3,7 @@ import HeaderPrimary from 'flarum/components/HeaderPrimary';
 import HeaderSecondary from 'flarum/components/HeaderSecondary';
 import SettingsPage from 'flarum/components/SettingsPage';
 import SessionDropdown from 'flarum/components/SessionDropdown';
+import LogInModal from 'flarum/components/LogInModal';
 
 app.initializers.add('toro-dng', function () {
     var addLinks = function (items, section)
@@ -48,4 +49,10 @@ app.initializers.add('toro-dng', function () {
             items.remove('logOut');
         }
     });
+
+    LogInModal.prototype.content = function() {
+        window.location.href = app.forum.attribute('dng.login');
+        // TODO: custom dng login form
+        return [];
+    }
 });

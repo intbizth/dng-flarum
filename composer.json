@@ -21,8 +21,8 @@
                         {"id": "dng-home", "href": "https://เด็กฝึกงาน.com", "label": "เด็กฝึกงาน.com"}
                     ],
                     "secondary": [
-                        {"id": "dng-register", "href": "https://เด็กฝึกงาน.com/register", "label": "สมัครสมาชิก"},
-                        {"id": "dng-login", "href": "https://เด็กฝึกงาน.com/login", "label": "เข้าระบบ"}
+                        {"id": "dng-register", "href": "https://เด็กฝึกงาน.com/register", "label": "สมัครสมาชิก", "private": false},
+                        {"id": "dng-login", "href": "https://เด็กฝึกงาน.com/login", "label": "เข้าระบบ", "private": false}
                     ]
                 }
             }

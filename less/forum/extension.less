@@ -1,0 +1,101 @@
+.Hero {
+  &--dng {
+    .Post {
+      padding-bottom: 0;
+    }
+  }
+}
+
+// todo warp --dng container
+.PostStream {
+  .PostStream-item {
+    &:first-child {
+      border-bottom: 3px solid #f6ebe4;
+      .Post {
+        //padding-left: 130px;
+        padding: 1.5rem;
+      }
+      .Post-header {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .Hero {
+    &--dng {
+      text-align: left;
+
+      .container {
+        padding-bottom: 0;
+      }
+    }
+
+    &--creator {
+      .Post {
+        padding-left: 125px;
+
+        > div {
+          display: inline-block;
+          //background: rgba(0, 0, 0, 0.05);
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 5px;
+          padding: 5px;
+          position: relative;
+        }
+      }
+      .Post-header {
+        margin-bottom: .5rem;
+
+        .item-user {
+          margin-left: .3rem;
+        }
+      }
+      .Post-actions {
+        opacity: 1 !important;
+        float: none;
+        position: absolute;
+        right: -15px;
+      }
+      .Post-footer {
+        margin: 10px 0 0 5px;
+        display: block;
+        white-space: nowrap;
+      }
+      .Post-quoteButtonContainer {
+        // todo: remove when i know what is this, (mention ext)
+      }
+      .PostUser-avatar {
+        top: -80px;
+        left: -130px;
+        width: 100px;
+        height: 100px;
+        font-size: 60px;
+        line-height: 1.6;
+        font-weight: bold;
+      }
+    }
+
+    &--title {
+      padding-left: 110px;
+
+      .DiscussionHero-title {
+        font-size: 26px;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .DiscussionPage-nav {
+    .item-subscription {
+      display: block;
+      text-align: center;
+
+      > div {
+        display: inline-block;
+      }
+    }
+  }
+}

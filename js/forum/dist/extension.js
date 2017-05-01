@@ -1,7 +1,7 @@
-System.register('toro/dng/main', ['flarum/extend', 'flarum/components/HeaderPrimary', 'flarum/components/HeaderSecondary', 'flarum/components/SettingsPage', 'flarum/components/SessionDropdown', 'flarum/components/LogInModal'], function (_export) {
+System.register('toro/dng/main', ['flarum/extend', 'flarum/components/HeaderPrimary', 'flarum/components/HeaderSecondary', 'flarum/components/SettingsPage', 'flarum/components/SessionDropdown', 'flarum/components/LogInModal', 'flarum/components/DiscussionHero', 'flarum/components/CommentPost', 'flarum/components/PostUser', 'flarum/helpers/listItems', 'flarum/helpers/avatar', 'flarum/utils/ItemList'], function (_export) {
     'use strict';
 
-    var extend, HeaderPrimary, HeaderSecondary, SettingsPage, SessionDropdown, LogInModal;
+    var extend, HeaderPrimary, HeaderSecondary, SettingsPage, SessionDropdown, LogInModal, DiscussionHero, CommentPost, PostUser, listItems, avatar, ItemList;
     return {
         setters: [function (_flarumExtend) {
             extend = _flarumExtend.extend;
@@ -15,6 +15,18 @@ System.register('toro/dng/main', ['flarum/extend', 'flarum/components/HeaderPrim
             SessionDropdown = _flarumComponentsSessionDropdown['default'];
         }, function (_flarumComponentsLogInModal) {
             LogInModal = _flarumComponentsLogInModal['default'];
+        }, function (_flarumComponentsDiscussionHero) {
+            DiscussionHero = _flarumComponentsDiscussionHero['default'];
+        }, function (_flarumComponentsCommentPost) {
+            CommentPost = _flarumComponentsCommentPost['default'];
+        }, function (_flarumComponentsPostUser) {
+            PostUser = _flarumComponentsPostUser['default'];
+        }, function (_flarumHelpersListItems) {
+            listItems = _flarumHelpersListItems['default'];
+        }, function (_flarumHelpersAvatar) {
+            avatar = _flarumHelpersAvatar['default'];
+        }, function (_flarumUtilsItemList) {
+            ItemList = _flarumUtilsItemList['default'];
         }],
         execute: function () {
 
@@ -72,6 +84,48 @@ System.register('toro/dng/main', ['flarum/extend', 'flarum/components/HeaderPrim
                     window.location.href = app.forum.attribute('dng.login');
                     // TODO: custom dng login form
                     return [];
+                };
+
+                DiscussionHero.prototype.view = function () {
+                    var discussion = this.props.discussion;
+                    var post = discussion.posts()[0];
+                    var startUser = post.user();
+                    var postUser = new PostUser({ post: post });
+                    var CommentPostCp = new CommentPost({ post: post });
+                    var contents = CommentPostCp.content();
+
+                    // remove body
+                    CommentPostCp.content = function () {
+                        return [contents[0]];
+                    };
+
+                    // remove action controls
+                    CommentPostCp.actionItems = function () {
+                        return new ItemList();
+                    };
+
+                    return m(
+                        'header',
+                        { className: 'Hero DiscussionHero Hero--dng' },
+                        m(
+                            'div',
+                            { className: 'container' },
+                            m(
+                                'div',
+                                { className: 'Hero--title' },
+                                m(
+                                    'ul',
+                                    { className: 'DiscussionHero-items' },
+                                    listItems(this.items().toArray())
+                                )
+                            ),
+                            m(
+                                'div',
+                                { className: 'Hero--creator' },
+                                CommentPostCp.render()
+                            )
+                        )
+                    );
                 };
             });
         }

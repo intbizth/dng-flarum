@@ -20,10 +20,12 @@ class AddAssetListener
      */
     public function addAssets(ConfigureWebApp $event)
     {
+        $event->addAssets(__DIR__ . '/../js/lib/string.js');
+
         if ($event->isForum()) {
             $event->addAssets([
                 __DIR__ . '/../js/forum/dist/extension.js',
-                //__DIR__.'/../less/forum/extension.less',
+                __DIR__ . '/../less/forum/extension.less',
             ]);
 
             $event->addBootstrapper('toro/dng/main');

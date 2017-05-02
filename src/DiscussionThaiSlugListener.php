@@ -46,7 +46,7 @@ class DiscussionThaiSlugListener
 
         $string = trim($text);                              // "⚡⚡ Don't forget: URL fragments should be i18n-friendly, hyphenated, short, and clean."
 
-        $string = preg_replace('/\'/gi', '', $string);        // "⚡⚡ Dont forget: URL fragments should be i18n-friendly, hyphenated, short, and clean."
+        $string = preg_replace("'", '', $string);        // "⚡⚡ Dont forget: URL fragments should be i18n-friendly, hyphenated, short, and clean."
 
         $string = preg_replace($nonsafeChars, '-', $string);  // "⚡⚡-Dont-forget--URL-fragments-should-be-i18n-friendly--hyphenated--short--and-clean-"
 

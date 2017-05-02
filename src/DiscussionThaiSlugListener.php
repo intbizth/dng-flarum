@@ -39,24 +39,16 @@ class DiscussionThaiSlugListener
 
         // https://github.com/bryanbraun/anchorjs/blob/master/anchor.js#L221
         // Regex for finding the nonsafe URL characters (many need escaping): & +$,:;=?@"#{}|^~[`%!']./()*\
-        $nonsafeChars = '/[& +$,:;=?@"#{}|^~[`%!\'\]\.\/\(\)\*\\]/g';
+        $nonsafeChars = '/[& +$,:;=?@"#{}|^~[`%!\'\]\.\/\(\)\*\\]/';
 
-        // Note: we trim hyphens after truncating because truncating can cause dangling hyphens.
-        // Example string:                                    // " ⚡⚡ Don't forget: URL fragments should be i18n-friendly, hyphenated, short, and clean."
-
-        $string = trim($text);                              // "⚡⚡ Don't forget: URL fragments should be i18n-friendly, hyphenated, short, and clean."
-
-        $string = preg_replace("'", '', $string);        // "⚡⚡ Dont forget: URL fragments should be i18n-friendly, hyphenated, short, and clean."
-
-        $string = preg_replace($nonsafeChars, '-', $string);  // "⚡⚡-Dont-forget--URL-fragments-should-be-i18n-friendly--hyphenated--short--and-clean-"
-
-        $string = preg_replace('/-{2,}/g', '-', $string);     // "⚡⚡-Dont-forget-URL-fragments-should-be-i18n-friendly-hyphenated-short-and-clean-"
-
-        //$string = substr($string, 0, 64);                     // "⚡⚡-Dont-forget-URL-fragments-should-be-i18n-friendly-hyphenated-"
-
-        $string = preg_replace('/^-+|-+$/gm', '', $string);   // "⚡⚡-Dont-forget-URL-fragments-should-be-i18n-friendly-hyphenated"
-
-        $string = strtolower($string);                        // "⚡⚡-dont-forget-url-fragments-should-be-i18n-friendly-hyphenated"
+        $string = trim($text);
+        $string = preg_replace("'", '', $string);
+        $string = preg_replace($nonsafeChars, '-', $string);
+        $string = preg_replace('/-{2,}/', '-', $string);
+        //$string = substr($string, 0, 64);
+        $string = preg_replace('/^-+|-+$/', '', $string);
+        $string = strtolower($string);
+        $string = trim($text);
 
         return $string ?: $text;
     }

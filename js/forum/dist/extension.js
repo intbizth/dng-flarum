@@ -99,7 +99,12 @@ System.register('toro/dng/main', ['flarum/extend', 'flarum/components/HeaderPrim
 
                 // end user goto dng login page
                 LogInModal.prototype.content = function () {
-                    //window.location.href = app.forum.data.attributes['wuethrich44-sso.login_url'];
+                    var loginUrl = app.forum.data.attributes['wuethrich44-sso.login_url'];
+
+                    if (loginUrl) {
+                        window.location.href = loginUrl;
+                    }
+
                     // TODO: custom dng login form
                     return [m(
                         'div',

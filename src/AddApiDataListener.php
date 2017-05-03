@@ -5,7 +5,6 @@ namespace Dng\Flarum;
 use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\Event\PrepareApiAttributes;
 use Flarum\Event\PrepareApiData;
-use Flarum\Extension\ExtensionManager;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Eloquent\Collection;
@@ -14,18 +13,12 @@ use Symfony\Component\Yaml\Yaml;
 class AddApiDataListener
 {
     /**
-     * @var ExtensionManager
-     */
-    private $extensionManager;
-
-    /**
      * @var SettingsRepositoryInterface
      */
     private $settings;
 
-    public function __construct(ExtensionManager $extensionManager, SettingsRepositoryInterface $settings)
+    public function __construct(SettingsRepositoryInterface $settings)
     {
-        $this->extensionManager = $extensionManager;
         $this->settings = $settings;
     }
 
@@ -43,30 +36,16 @@ class AddApiDataListener
     public function prepareApiAttributes(PrepareApiAttributes $event)
     {
         if ($event->isSerializer(ForumSerializer::class)) {
-            $ext = $this->extensionManager->getExtension(DngForum::NAME);
-            $settings = (array) $ext->composerJsonAttribute('extra.flarum-extension.settings');
-            $links = $settings['links'];
-            $loginUrl = $settings['dng_login_url'];
-
             // todo: setting provider or db setttings
-            if ($file = $this->settings->get(DngForum::SETTING_FILE_KEY, __DIR__ . '../../../../dng.settings.yml')) {
+            if ($file = $this->settings->get(DngForum::SETTING_FILE_KEY, __DIR__ . '/../../../../dng.settings.yml')) {
                 if (file_exists($file)) {
                     $settings = Yaml::parse(file_get_contents($file));
 
                     if (!empty($settings['links'])) {
-                        $links = $settings['links'];
-                    }
-
-                    if (!empty($settings['dng_login_url'])) {
-                        $loginUrl = $settings['dng_login_url'];
+                        $event->attributes['dng.links'] = $settings['links'];
                     }
                 }
             }
-
-            $event->attributes = array_merge($event->attributes, [
-                'dng.links' => $links,
-                'dng.login' => $loginUrl
-            ]);
         }
     }
 }

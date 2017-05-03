@@ -1,7 +1,31 @@
-System.register('toro/dng/main', ['flarum/extend', 'flarum/components/HeaderPrimary', 'flarum/components/HeaderSecondary', 'flarum/components/SettingsPage', 'flarum/components/SessionDropdown', 'flarum/components/LogInModal', 'flarum/components/DiscussionHero', 'flarum/components/CommentPost', 'flarum/components/PostUser', 'flarum/helpers/listItems', 'flarum/helpers/avatar', 'flarum/utils/ItemList'], function (_export) {
+System.register('toro/dng/components/LoginMe', ['flarum/components/LogInModal'], function (_export) {
+  'use strict';
+
+  var LogInModal, LoginMe;
+  return {
+    setters: [function (_flarumComponentsLogInModal) {
+      LogInModal = _flarumComponentsLogInModal['default'];
+    }],
+    execute: function () {
+      LoginMe = (function (_LogInModal) {
+        babelHelpers.inherits(LoginMe, _LogInModal);
+
+        function LoginMe() {
+          babelHelpers.classCallCheck(this, LoginMe);
+          babelHelpers.get(Object.getPrototypeOf(LoginMe.prototype), 'constructor', this).apply(this, arguments);
+        }
+
+        return LoginMe;
+      })(LogInModal);
+
+      _export('default', LoginMe);
+    }
+  };
+});;
+System.register('toro/dng/main', ['flarum/extend', 'flarum/components/HeaderPrimary', 'flarum/components/HeaderSecondary', 'flarum/components/SettingsPage', 'flarum/components/LogInModal', 'flarum/components/DiscussionHero', 'flarum/components/CommentPost', 'flarum/components/PostUser', 'flarum/helpers/listItems', 'flarum/helpers/avatar', 'flarum/utils/ItemList', 'toro/dng/components/LoginMe'], function (_export) {
     'use strict';
 
-    var extend, HeaderPrimary, HeaderSecondary, SettingsPage, SessionDropdown, LogInModal, DiscussionHero, CommentPost, PostUser, listItems, avatar, ItemList;
+    var extend, HeaderPrimary, HeaderSecondary, SettingsPage, LogInModal, DiscussionHero, CommentPost, PostUser, listItems, avatar, ItemList, LoginMe;
     return {
         setters: [function (_flarumExtend) {
             extend = _flarumExtend.extend;
@@ -11,8 +35,6 @@ System.register('toro/dng/main', ['flarum/extend', 'flarum/components/HeaderPrim
             HeaderSecondary = _flarumComponentsHeaderSecondary['default'];
         }, function (_flarumComponentsSettingsPage) {
             SettingsPage = _flarumComponentsSettingsPage['default'];
-        }, function (_flarumComponentsSessionDropdown) {
-            SessionDropdown = _flarumComponentsSessionDropdown['default'];
         }, function (_flarumComponentsLogInModal) {
             LogInModal = _flarumComponentsLogInModal['default'];
         }, function (_flarumComponentsDiscussionHero) {
@@ -27,6 +49,8 @@ System.register('toro/dng/main', ['flarum/extend', 'flarum/components/HeaderPrim
             avatar = _flarumHelpersAvatar['default'];
         }, function (_flarumUtilsItemList) {
             ItemList = _flarumUtilsItemList['default'];
+        }, function (_toroDngComponentsLoginMe) {
+            LoginMe = _toroDngComponentsLoginMe['default'];
         }],
         execute: function () {
 
@@ -57,14 +81,6 @@ System.register('toro/dng/main', ['flarum/extend', 'flarum/components/HeaderPrim
                 });
 
                 extend(HeaderSecondary.prototype, 'items', function (items) {
-                    if (items.has('signUp')) {
-                        items.remove('signUp');
-                    }
-
-                    if (items.has('logIn')) {
-                        items.remove('logIn');
-                    }
-
                     addLinks(items, 'secondary');
                 });
 
@@ -74,16 +90,30 @@ System.register('toro/dng/main', ['flarum/extend', 'flarum/components/HeaderPrim
                     }
                 });
 
-                extend(SessionDropdown.prototype, 'items', function (items) {
-                    if (items.has('logOut')) {
-                        items.remove('logOut');
-                    }
-                });
+                // backup login dialog, use for admin login
+                // console.app.showMeLoginModal()
+                LoginMe.prototype.content = LoginMe.prototype.content;
+                app.showMeLoginModal = function () {
+                    app.modal.show(new LoginMe());
+                };
 
+                // end user goto dng login page
                 LogInModal.prototype.content = function () {
-                    window.location.href = app.forum.attribute('dng.login');
+                    //window.location.href = app.forum.data.attributes['wuethrich44-sso.login_url'];
                     // TODO: custom dng login form
-                    return [];
+                    return [m(
+                        'div',
+                        { className: 'Modal-body' },
+                        m(
+                            'div',
+                            { className: 'Form Form--centered' },
+                            m(
+                                'h4',
+                                null,
+                                'Please login before writing discussion'
+                            )
+                        )
+                    )];
                 };
 
                 DiscussionHero.prototype.view = function () {

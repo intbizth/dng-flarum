@@ -9,6 +9,7 @@ import PostUser from 'flarum/components/PostUser';
 import listItems from 'flarum/helpers/listItems';
 import avatar from 'flarum/helpers/avatar';
 import ItemList from 'flarum/utils/ItemList';
+import LoginMe from 'toro/dng/components/LoginMe';
 
 app.initializers.add('toro-dng', function () {
     var addLinks = function (items, section)
@@ -41,11 +42,30 @@ app.initializers.add('toro-dng', function () {
         }
     });
 
-    /*LogInModal.prototype.content = function() {
-        window.location.href = app.forum.attribute('dng.login');
+    // backup login dialog, use for admin login
+    // console.app.showMeLoginModal()
+    LoginMe.prototype.content = LoginMe.prototype.content;
+    app.showMeLoginModal = function () {
+        app.modal.show(new LoginMe());
+    };
+
+    // end user goto dng login page
+    LogInModal.prototype.content = function() {
+        const loginUrl = app.forum.data.attributes['wuethrich44-sso.login_url'];
+
+        if (loginUrl) {
+            window.location.href = loginUrl;
+        }
+
         // TODO: custom dng login form
-        return [];
-    }*/
+        return [
+            <div className="Modal-body">
+                <div className="Form Form--centered">
+                    <h4>Please login before writing discussion</h4>
+                </div>
+            </div>
+        ];
+    }
 
     DiscussionHero.prototype.view = function() {
         const discussion = this.props.discussion;

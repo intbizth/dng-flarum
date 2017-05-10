@@ -199,6 +199,7 @@ class URLify
         $string = str_replace('_', ' ', $string);             // treat underscores as spaces
         $string = preg_replace('/^\s+|\s+$/u', '', $string);  // trim leading/trailing spaces
         $string = preg_replace('/[-\s]+/u', '-', $string);    // convert spaces to hyphens
+        $string = preg_replace('/’/u', '-', $string);    // convert spaces to hyphens
         $string = self::typo($string);
         $string = strtolower($string);                        // convert to lowercase
 

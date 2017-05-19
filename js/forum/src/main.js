@@ -12,9 +12,19 @@ import ItemList from 'flarum/utils/ItemList';
 import LoginMe from 'toro/dng/components/LoginMe';
 
 app.initializers.add('toro-dng', function () {
+    var links = app.forum.attribute('dng.links') || {};
+
+    $('#home-link')
+        .unbind('click')
+        .click(e => {
+            e.preventDefault();
+            window.location.href = links.home;
+        })
+        .attr('href', links.home)
+    ;
+
     var addLinks = function (items, section)
     {
-        var links = app.forum.attribute('dng.links') || {};
         if (links[section]) {
             var privated = !!app.session.user;
 

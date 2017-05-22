@@ -55,14 +55,15 @@ System.register('toro/dng/main', ['flarum/extend', 'flarum/components/HeaderPrim
         execute: function () {
 
             app.initializers.add('toro-dng', function () {
-                var links = app.forum.attribute('dng.links') || {};
-
-                $('#home-link').unbind('click').click(function (e) {
-                    e.preventDefault();
-                    window.location.href = links.home;
-                }).attr('href', links.home);
-
                 var addLinks = function addLinks(items, section) {
+                    var links = app.forum.attribute('dng.links') || {};
+
+                    // todo: move other place
+                    $('#home-link').unbind('click').click(function (e) {
+                        e.preventDefault();
+                        window.location.href = links.home;
+                    }).attr('href', links.home);
+
                     if (links[section]) {
                         var privated = !!app.session.user;
 
